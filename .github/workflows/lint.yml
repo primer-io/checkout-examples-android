@@ -1,0 +1,18 @@
+name: Lint code
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run lint checks
+        run: ./gradlew clean lint
+
+      - name: Run ktlint checks
+        run: ./gradlew clean ktlintCheck
