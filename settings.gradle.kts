@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Checkout Examples"
-include(":co-badgedcards")
+include(":co-badged-cards")

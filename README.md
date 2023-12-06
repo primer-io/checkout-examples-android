@@ -1,7 +1,9 @@
-# Examples
+# Checkout Examples for Primer Android SDK
 
-They can be classified in three types, each with its own folder and multiple examples within:
+This repo contains examples of how to try out and how to integrate Primer's Android SDK.
 
-- `features`: focuses on how to use a specific feature of Primer's Checkout
-- `frameworks`: focuses on how to integrate a specific package of Primer's Checkout (React, Vue, etc.)
-- `servers`: focuses on how to create your server that will securely host your `API_KEY` and call Primer's API
+Each example is focused on one aspect of the integration path.
+
+| Example                                | Description |
+|----------------------------------------| ----------- |
+| 💳 [Co-Badged Cards](/co-badged-cards) | This example demonstrates how to integrate co-badged card support if you are offering support to your customers for a relevant network, such as Cartes Bancaires |
