@@ -29,8 +29,11 @@ interface ClientSessionService {
         private val json = Json { ignoreUnknownKeys = true }
 
         fun create(): ClientSessionService {
-            val logLevel = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-            else HttpLoggingInterceptor.Level.NONE
+            val logLevel = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
             val logger =
                 HttpLoggingInterceptor().apply { level = logLevel }
 

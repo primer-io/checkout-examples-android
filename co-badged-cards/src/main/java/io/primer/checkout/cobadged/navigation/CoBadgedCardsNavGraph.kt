@@ -65,7 +65,6 @@ fun CoBadgedCardsNavGraph(
                 }
             )
         ) { currentBackStackEntry ->
-
             val checkoutResult = requireNotNull(
                 currentBackStackEntry.arguments?.parcelable<CheckoutResult>(
                     RESULT_ARGUMENT

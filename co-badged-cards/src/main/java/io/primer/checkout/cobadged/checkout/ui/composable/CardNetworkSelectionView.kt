@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import io.primer.android.ui.CardNetwork
 import io.primer.checkout.cobadged.R

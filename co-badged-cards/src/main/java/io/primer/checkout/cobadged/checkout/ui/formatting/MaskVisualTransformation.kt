@@ -47,7 +47,7 @@ class MaskVisualTransformation(private val mask: String, private val symbol: Cha
     private fun offsetTranslator(formatted: String) = object : OffsetMapping {
         override fun originalToTransformed(offset: Int): Int {
             val transformedOffsets = formatted
-                .mapIndexedNotNull { index, c ->
+                .mapIndexedNotNull { index, _ ->
                     index
                         .takeIf { specialSymbolsIndices.contains(index).not() }
                         ?.plus(1)

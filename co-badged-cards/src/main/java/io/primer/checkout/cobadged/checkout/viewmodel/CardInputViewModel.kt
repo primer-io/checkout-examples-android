@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +29,8 @@ sealed class CardFormUiState {
 
     data class ShowCardForm(val showCardholderName: Boolean) :
         CardFormUiState()
+
+    data object Submitted : CardFormUiState()
 
     data class CheckoutCompleted(val checkoutResult: CheckoutResult) : CardFormUiState()
 
@@ -57,13 +58,21 @@ class CardInputViewModel @Inject constructor(
         cardInput
     }.also { cardInputRepository.updateCardData(cardInput) }
 
-    fun submitData() = cardInputRepository.submit()
+    fun submitData() {
+        _cardFormUiState.update { CardFormUiState.Submitted }
+        cardInputRepository.submit()
+    }
 
-    fun startCheckout(clientToken: String) = viewModelScope.launch {
+    fun startCheckout(clientToken: String) {
+        subscribeToEvents()
         headlessRepository.apply {
-            primerHeadlessEvents.onStart {
-                start(clientToken)
-            }.collectLatest { event ->
+            start(clientToken)
+        }
+    }
+
+    private fun subscribeToEvents() = viewModelScope.launch {
+        headlessRepository.apply {
+            primerHeadlessEvents.collectLatest { event ->
                 when (event) {
                     is PrimerHeadlessEvent.AvailablePaymentMethodsLoaded ->
                         handleAvailablePaymentMethods(event.paymentMethods)

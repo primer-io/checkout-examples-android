@@ -49,6 +49,10 @@ class DefaultPrimerHeadlessRepository @Inject constructor(
                     trySend(PrimerHeadlessEvent.AvailablePaymentMethodsLoaded(paymentMethods))
                 }
 
+                override fun onCheckoutCompleted(checkoutData: PrimerCheckoutData) {
+                    trySend(PrimerHeadlessEvent.CheckoutCompleted(checkoutData))
+                }
+
                 override fun onFailed(error: PrimerError, checkoutData: PrimerCheckoutData?) {
                     trySend(
                         PrimerHeadlessEvent.CheckoutFailed(
@@ -56,10 +60,6 @@ class DefaultPrimerHeadlessRepository @Inject constructor(
                             checkoutData
                         )
                     )
-                }
-
-                override fun onCheckoutCompleted(checkoutData: PrimerCheckoutData) {
-                    trySend(PrimerHeadlessEvent.CheckoutCompleted(checkoutData))
                 }
             }
         )

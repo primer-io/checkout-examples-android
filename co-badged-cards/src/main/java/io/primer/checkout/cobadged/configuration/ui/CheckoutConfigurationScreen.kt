@@ -25,13 +25,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.primer.checkout.cobadged.R
-import io.primer.checkout.cobadged.configuration.viewmodels.PrimerClientConfigurationViewModel
+import io.primer.checkout.cobadged.configuration.viewmodel.CheckoutConfigurationViewModel
 
 @Composable
 fun CheckoutConfigurationScreen(
     onNavigateToCheckout: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PrimerClientConfigurationViewModel = hiltViewModel()
+    viewModel: CheckoutConfigurationViewModel = hiltViewModel()
 ) {
     val checkoutUiState by viewModel.checkoutUiState.collectAsState()
 

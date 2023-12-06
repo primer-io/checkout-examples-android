@@ -42,6 +42,9 @@ fun CardScreen(
             CardFormUiState.Initializing -> IndeterminateCircularIndicator(
                 modifier
             )
+            CardFormUiState.Submitted -> IndeterminateCircularIndicator(
+                modifier
+            )
 
             is CardFormUiState.ShowCardForm -> CardView(
                 modifier.padding(contentPaddings),

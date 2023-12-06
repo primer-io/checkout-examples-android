@@ -1,4 +1,4 @@
-package io.primer.checkout.cobadged.configuration.viewmodels
+package io.primer.checkout.cobadged.configuration.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PrimerClientConfigurationViewModel @Inject constructor(
+class CheckoutConfigurationViewModel @Inject constructor(
     private val clientSessionRepository: ClientSessionRepository,
     private val clientTokenValidator: ClientTokenValidator,
     private val savedStateHandle: SavedStateHandle
