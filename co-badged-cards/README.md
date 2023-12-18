@@ -46,13 +46,13 @@ We have organized our code into two repositories to streamline the integration p
 
 #### 1. Primer Headless Initialization and Events
 
-- [PrimerHeadlessRepository repository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/PrimerHeadlessRepository.kt) 
+- [PrimerHeadlessRepository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/PrimerHeadlessRepository.kt) 
   contains the necessary code for initializing the Primer Headless SDK and managing events.
 - Use this repository to set up the base structure and manage Primer Headless events within your application.
 
 
 #### 2. Card Input Functions using `PrimerHeadlessRawDataManager`
 
-- [CardInputRepository repository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/CardInputRepository.kt)
+- [CardInputRepository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/CardInputRepository.kt)
   focuses specifically on card input functions leveraging the `PrimerHeadlessRawDataManager`.
 - It provides functions and utilities for handling card inputs during the checkout process.
