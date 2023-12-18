@@ -20,12 +20,14 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.primer.checkout.cobadged.R
+import io.primer.checkout.cobadged.checkout.data.model.CardNetworkMetadata
 import io.primer.checkout.cobadged.checkout.viewmodel.CardInputViewModel
 
 @Composable
 fun CardView(
     modifier: Modifier = Modifier,
     showCardholderName: Boolean,
+    supportedCardNetworks: List<CardNetworkMetadata>,
     viewModel: CardInputViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
@@ -46,6 +48,7 @@ fun CardView(
         CardForm(
             input = input,
             showCardholderName = showCardholderName,
+            supportedCardNetworks = supportedCardNetworks,
             validationErrors = validation?.validationErrors,
             cardNetworksState = cardNetworksState,
             onCardInputChanged = { cardInput ->

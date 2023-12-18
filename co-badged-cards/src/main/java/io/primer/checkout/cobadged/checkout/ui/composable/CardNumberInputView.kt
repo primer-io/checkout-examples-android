@@ -31,7 +31,7 @@ fun CardNumberInputView(
         is CardNetworksState.CardNetworksChanged ->
             CardFormat.valueOf(
                 selectedCardNetwork?.name
-                    ?: cardNetworksState.preferredCardNetwork.type.name
+                    ?: cardNetworksState.preferredCardNetwork?.type?.name ?: CardFormat.UNKNOWN.name
             )
 
         else -> CardFormat.UNKNOWN

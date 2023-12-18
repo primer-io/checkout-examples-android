@@ -32,6 +32,8 @@ interface CardInputRepository {
     fun updateCardData(cardInput: CardInput)
 
     fun submit()
+
+    fun getSupportedCardNetworks(): List<CardNetworkMetadata>
 }
 
 class PrimerCardInputRepository(@ApplicationContext private val context: Context) :
@@ -67,6 +69,16 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
         rawDataManager.submit()
     }
 
+    override fun getSupportedCardNetworks() =
+        PrimerHeadlessUniversalCheckoutAssetsManager.getSupportedCardNetworkAssets(context)
+            .values.map { asset ->
+                CardNetworkMetadata(
+                    asset.cardNetwork,
+                    asset.cardNetwork.name,
+                    asset.cardNetworkIcon.colored
+                )
+            }
+
     override fun onValidationChanged(
         isValid: Boolean,
         errors: List<PrimerInputValidationError>
@@ -93,25 +105,25 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
                         _cardNetworksState.tryEmit(
                             metadataState.cardMetadata.let {
                                 CardNetworksState.CardNetworksChanged(
-                                    it.availableCardNetworks.map { primerCardNetwork ->
+                                    it.allowedNetworks.map { primerCardNetwork ->
                                         CardNetworkMetadata(
-                                            primerCardNetwork.networkIdentifier,
+                                            primerCardNetwork.network,
                                             primerCardNetwork.displayName,
                                             PrimerHeadlessUniversalCheckoutAssetsManager
                                                 .getCardNetworkAssets(
                                                     context,
-                                                    primerCardNetwork.networkIdentifier
+                                                    primerCardNetwork.network
                                                 ).cardNetworkIcon.colored
                                         )
                                     },
-                                    it.preferredCardNetwork.let { primerCardNetwork ->
+                                    it.preferredNetwork?.let { primerCardNetwork ->
                                         CardNetworkMetadata(
-                                            primerCardNetwork.networkIdentifier,
+                                            primerCardNetwork.network,
                                             primerCardNetwork.displayName,
                                             PrimerHeadlessUniversalCheckoutAssetsManager
                                                 .getCardNetworkAssets(
                                                     context,
-                                                    primerCardNetwork.networkIdentifier
+                                                    primerCardNetwork.network
                                                 ).cardNetworkIcon.colored
                                         )
                                     }

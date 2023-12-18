@@ -9,6 +9,7 @@ import io.primer.checkout.cobadged.checkout.data.repository.CardInputRepository
 import io.primer.checkout.cobadged.checkout.data.repository.PrimerHeadlessEvent
 import io.primer.checkout.cobadged.checkout.data.repository.PrimerHeadlessRepository
 import io.primer.checkout.cobadged.checkout.data.model.CardInput
+import io.primer.checkout.cobadged.checkout.data.model.CardNetworkMetadata
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworksState
 import io.primer.checkout.cobadged.checkout.data.model.CardValidation
 import io.primer.checkout.cobadged.checkout.data.repository.DefaultPrimerHeadlessRepository.Companion.CARD_PAYMENT_METHOD_TYPE
@@ -27,8 +28,10 @@ sealed class CardFormUiState {
 
     data object Initializing : CardFormUiState()
 
-    data class ShowCardForm(val showCardholderName: Boolean) :
-        CardFormUiState()
+    data class ShowCardForm(
+        val showCardholderName: Boolean,
+        val supportedCardNetworks: List<CardNetworkMetadata>
+    ) : CardFormUiState()
 
     data object Submitted : CardFormUiState()
 
@@ -99,7 +102,8 @@ class CardInputViewModel @Inject constructor(
         if (isCardPaymentAllowed) {
             _cardFormUiState.update {
                 CardFormUiState.ShowCardForm(
-                    cardInputRepository.isCardholderNameEnabled()
+                    cardInputRepository.isCardholderNameEnabled(),
+                    cardInputRepository.getSupportedCardNetworks()
                 )
             }
         } else {

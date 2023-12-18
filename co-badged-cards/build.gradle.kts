@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     implementation(libs.primer.sdk)
+    implementation(libs.primer.threeds.sdk)
 
     testImplementation(libs.junit)
 }

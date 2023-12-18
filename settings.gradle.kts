@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenLocal()
+        maven {
+           setUrl(providers.gradleProperty("PRIMER_ANDROID_ARTIFACTORY_URL"))
+        }
         mavenCentral()
     }
 }
