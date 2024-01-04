@@ -29,7 +29,7 @@ private fun Modifier.cardInputModifier() = composed {
 fun CardForm(
     input: CardInput,
     showCardholderName: Boolean,
-    supportedCardNetworks: List<CardNetworkMetadata>,
+    allowedCardNetworks: List<CardNetworkMetadata>,
     validationErrors: ValidationErrors?,
     cardNetworksState: CardNetworksState?,
     onCardInputChanged: (CardInput) -> Unit,
@@ -49,7 +49,7 @@ fun CardForm(
         modifier = modifier.cardInputModifier()
     )
     Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
-        supportedCardNetworks.forEach { cardNetworkMetadata ->
+        allowedCardNetworks.forEach { cardNetworkMetadata ->
             cardNetworkMetadata.resource?.toBitmap()?.asImageBitmap()?.let { bitmap ->
                 Image(
                     bitmap = bitmap,

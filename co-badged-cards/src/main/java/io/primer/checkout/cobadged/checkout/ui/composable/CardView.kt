@@ -27,7 +27,7 @@ import io.primer.checkout.cobadged.checkout.viewmodel.CardInputViewModel
 fun CardView(
     modifier: Modifier = Modifier,
     showCardholderName: Boolean,
-    supportedCardNetworks: List<CardNetworkMetadata>,
+    allowedCardNetworks: List<CardNetworkMetadata>,
     viewModel: CardInputViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
@@ -48,7 +48,7 @@ fun CardView(
         CardForm(
             input = input,
             showCardholderName = showCardholderName,
-            supportedCardNetworks = supportedCardNetworks,
+            allowedCardNetworks = allowedCardNetworks,
             validationErrors = validation?.validationErrors,
             cardNetworksState = cardNetworksState,
             onCardInputChanged = { cardInput ->

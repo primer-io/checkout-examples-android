@@ -12,6 +12,7 @@ data class CardNetworkMetadata(
 sealed interface CardNetworksState {
 
     data class CardNetworksChanged(
+        val canSelectCardNetwork: Boolean,
         val availableCardNetworks: List<CardNetworkMetadata>,
         val preferredCardNetwork: CardNetworkMetadata?
     ) : CardNetworksState

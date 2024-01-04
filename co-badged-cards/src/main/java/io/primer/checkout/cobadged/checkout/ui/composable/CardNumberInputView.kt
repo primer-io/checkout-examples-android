@@ -31,10 +31,10 @@ fun CardNumberInputView(
         is CardNetworksState.CardNetworksChanged ->
             CardFormat.valueOf(
                 selectedCardNetwork?.name
-                    ?: cardNetworksState.preferredCardNetwork?.type?.name ?: CardFormat.UNKNOWN.name
+                    ?: cardNetworksState.preferredCardNetwork?.type?.name ?: CardFormat.OTHER.name
             )
 
-        else -> CardFormat.UNKNOWN
+        else -> CardFormat.OTHER
     }
 
     OutlinedTextField(
@@ -55,11 +55,17 @@ fun CardNumberInputView(
         trailingIcon = {
             cardNetworksState?.let { state ->
                 when (state) {
-                    is CardNetworksState.CardNetworksChanged -> CardNetworkSelectionView(
-                        state.availableCardNetworks,
-                        selectedCardNetwork,
-                        onCardNetworkSelected
-                    )
+                    is CardNetworksState.CardNetworksChanged -> {
+                        if (state.canSelectCardNetwork) {
+                            CardNetworkSelectionView(
+                                state.availableCardNetworks,
+                                selectedCardNetwork,
+                                onCardNetworkSelected
+                            )
+                        } else {
+                            state.availableCardNetworks.firstOrNull()?.let { CardNetworkView(it) }
+                        }
+                    }
 
                     is CardNetworksState.CardNetworksLoading ->
                         CircularProgressIndicator(

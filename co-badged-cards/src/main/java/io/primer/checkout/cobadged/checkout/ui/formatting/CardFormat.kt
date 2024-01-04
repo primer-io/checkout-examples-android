@@ -5,6 +5,7 @@ enum class CardFormat(val mask: String, val cvvLength: Int = 3) {
     VISA("#### #### #### ####"),
     MASTERCARD("#### #### #### ####"),
     MAESTRO("#### #### #### ####"),
+    DANKORT("#### #### #### ####"),
     CARTES_BANCAIRES("#### #### #### ####"),
     AMEX("#### ###### #####", 4),
     DINERS_CLUB("#### ###### ####"),
@@ -12,7 +13,7 @@ enum class CardFormat(val mask: String, val cvvLength: Int = 3) {
     JCB("#### #### #### #######"),
     UNIONPAY("#### #### #### #######"),
     MIR("#### #### #### #######"),
-    UNKNOWN("#### #### #### ####");
+    OTHER("#### #### #### ####");
 
     fun cardNumberMaxLength() = mask.filter { it == '#' }.length
 }

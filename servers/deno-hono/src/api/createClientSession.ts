@@ -7,6 +7,9 @@ export function createClientSession(info: Info) {
     {
       ...info,
       orderId: crypto.randomUUID(),
+      paymentMethod: {
+        orderedAllowedCardNetworks: ['VISA', 'MASTERCARD']
+      }
     },
     primerHeaders,
   );

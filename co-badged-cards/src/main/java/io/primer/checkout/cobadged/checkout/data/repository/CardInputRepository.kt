@@ -33,7 +33,7 @@ interface CardInputRepository {
 
     fun submit()
 
-    fun getSupportedCardNetworks(): List<CardNetworkMetadata>
+    fun getAllowedCardsNetworks(): List<CardNetworkMetadata>
 }
 
 class PrimerCardInputRepository(@ApplicationContext private val context: Context) :
@@ -69,8 +69,8 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
         rawDataManager.submit()
     }
 
-    override fun getSupportedCardNetworks() =
-        PrimerHeadlessUniversalCheckoutAssetsManager.getSupportedCardNetworkAssets(context)
+    override fun getAllowedCardsNetworks() =
+        PrimerHeadlessUniversalCheckoutAssetsManager.getAllowedCardsNetworkAssets(context)
             .values.map { asset ->
                 CardNetworkMetadata(
                     asset.cardNetwork,
@@ -87,7 +87,9 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
             CardValidation(
                 isValid,
                 ValidationErrors(
-                    errors.findErrorById(CARD_NUMBER_ERROR_ID),
+                    errors.findErrorById(CARD_NUMBER_ERROR_ID) ?: errors.findErrorById(
+                        CARD_TYPE_ERROR_ID
+                    ),
                     errors.findErrorById(CARD_EXPIRY_DATE_ERROR_ID),
                     errors.findErrorById(CARD_CVV_ERROR_ID),
                     errors.findErrorById(CARDHOLDER_NAME_ERROR_ID)
@@ -103,9 +105,10 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
                 when (metadataState) {
                     is PrimerCardMetadataState.Fetched ->
                         _cardNetworksState.tryEmit(
-                            metadataState.cardMetadata.let {
+                            metadataState.cardMetadata.let { metadata ->
                                 CardNetworksState.CardNetworksChanged(
-                                    it.allowedNetworks.map { primerCardNetwork ->
+                                    metadata.canSelectCardNetwork,
+                                    metadata.allowedDetectedCardNetworks.map { primerCardNetwork ->
                                         CardNetworkMetadata(
                                             primerCardNetwork.network,
                                             primerCardNetwork.displayName,
@@ -116,7 +119,7 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
                                                 ).cardNetworkIcon.colored
                                         )
                                     },
-                                    it.preferredNetwork?.let { primerCardNetwork ->
+                                    metadata.preferredCardNetwork?.let { primerCardNetwork ->
                                         CardNetworkMetadata(
                                             primerCardNetwork.network,
                                             primerCardNetwork.displayName,
@@ -147,5 +150,6 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
         const val CARD_EXPIRY_DATE_ERROR_ID = "invalid-expiry-date"
         const val CARD_CVV_ERROR_ID = "invalid-cvv"
         const val CARDHOLDER_NAME_ERROR_ID = "invalid-cardholder-name"
+        const val CARD_TYPE_ERROR_ID = "invalid-card-type"
     }
 }

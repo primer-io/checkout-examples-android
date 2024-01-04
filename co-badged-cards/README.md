@@ -14,31 +14,34 @@ git clone https://github.com/primer-io/checkout-examples-android.git
 
 Select `co-badged-cards` configuration and run the project.
 
-3. Setup the client token (TODO)
+3. Setup the client token server
 
-## Understanding the integration
+Refer to the instructions provided in the [example-backend Readme](https://github.com/primer-io/example-backend/blob/main/README.md) 
+to set up the server for generating the client token needed to initialize the SDK.
 
+#### Setting Checkout Backend URL
 
-To initiate the checkout process, follow these steps:
-
-### 1. Obtain Client Token or Checkout Backend URL
+- You can set the URL of the checkout backend to initiate the checkout generated in step 3.
+- The application provides an input field where you can input this URL or you can set the `BASE_URL` field defined
+  in the [ClientSessionService](src/main/java/io/primer/checkout/cobadged/configuration/data/api/ClientSessionService.kt#L26).
+- When the URL is set, you can request new client token in the example app.
 
 #### Manually Created Client Token
 
 - On the initial screen of your application, there's an option to manually input a client token.
 - Paste the client token generated specifically for your integration to start the checkout process.
 
-#### Setting Checkout Backend URL
+## Understanding the integration
 
-- Alternatively, you can set the URL of the checkout backend to initiate the checkout.
-- The application provides an input field where you can input this URL.
+We have followed a very simple Android architectural principles as describe in Android [documentation](https://developer.android.com/topic/architecture).
 
-### 2. Client Token Validation
+We have used following stack:
 
-Once the client token is provided:
+- Hilt for DI
+- Retrofit for API calls
+- Jetpack Compose + ViewModels on the UI/presentation layer
 
-- The example application will verify the validity of the client token.
-- If the token is valid, the example app will proceed to create a card input form for the checkout process.
+For easier separation of concerns, application was split into:
 
 ### Repositories
 
@@ -47,12 +50,32 @@ We have organized our code into two repositories to streamline the integration p
 #### 1. Primer Headless Initialization and Events
 
 - [PrimerHeadlessRepository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/PrimerHeadlessRepository.kt) 
-  contains the necessary code for initializing the Primer Headless SDK and managing events.
+  contains the necessary code for initializing the Primer Headless SDK and managing checkout lifecycle events.
 - Use this repository to set up the base structure and manage Primer Headless events within your application.
 
 
-#### 2. Card Input Functions using `PrimerHeadlessRawDataManager`
+#### 2. Card Input Functions using `PrimerHeadlessUniversalCheckoutRawDataManager`
 
 - [CardInputRepository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/CardInputRepository.kt)
-  focuses specifically on card input functions leveraging the `PrimerHeadlessRawDataManager`.
+  focuses specifically on card input functions leveraging the `PrimerHeadlessUniversalCheckoutRawDataManager`.
 - It provides functions and utilities for handling card inputs during the checkout process.
+
+### UI/Presentation
+
+We have organized our code into two ViewModels to streamline the integration process:
+
+#### 1. Primer Headless Initialization and Events
+
+- [CheckoutConfigurationViewModel](src/main/java/io/primer/checkout/cobadged/configuration/viewmodel/CheckoutConfigurationViewModel.kt)
+  focuses on retrieving and validating client token needed for SDK initialization.
+
+#### 2. Card Input Functions using `CardInputViewModel`
+
+- [CardInputViewModel](src/main/java/io/primer/checkout/cobadged/checkout/viewmodel/CardInputViewModel.kt)
+  focuses specifically on card input functions leveraging the `CardInputRepository`.
+- It provides functions and utilities for handling card inputs during the checkout process.
+
+#### 3. Card Screen presentation using `CardScreen`
+
+- [CardScreen](src/main/java/io/primer/checkout/cobadged/checkout/ui/CardScreen.kt)
+  is a Composable that presents the card screen.

@@ -30,7 +30,7 @@ sealed class CardFormUiState {
 
     data class ShowCardForm(
         val showCardholderName: Boolean,
-        val supportedCardNetworks: List<CardNetworkMetadata>
+        val allowedCardNetworks: List<CardNetworkMetadata>
     ) : CardFormUiState()
 
     data object Submitted : CardFormUiState()
@@ -103,7 +103,7 @@ class CardInputViewModel @Inject constructor(
             _cardFormUiState.update {
                 CardFormUiState.ShowCardForm(
                     cardInputRepository.isCardholderNameEnabled(),
-                    cardInputRepository.getSupportedCardNetworks()
+                    cardInputRepository.getAllowedCardsNetworks()
                 )
             }
         } else {
@@ -152,6 +152,6 @@ class CardInputViewModel @Inject constructor(
     private companion object {
 
         const val CARD_PAYMENT_NOT_AVAILABLE_ERR0R =
-            "Payment card is not available for current session."
+            "Payment card is not available for the current session."
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,6 +35,9 @@ fun CardNetworkSelectionView(
                             onCardNetworkSelected(cardNetworkMetadata.type)
                         }
                         .height(dimensionResource(id = R.dimen.card_network_image_size))
+                        .padding(
+                            horizontal = dimensionResource(id = R.dimen.card_network_image_spacing)
+                        )
                         .alpha(
                             if (cardNetworkMetadata.type == selectedCardNetwork ||
                                 selectedCardNetwork == null
