@@ -3,47 +3,44 @@ package io.primer.checkout.cobadged.checkout.ui.composable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.core.graphics.drawable.toBitmap
-import io.primer.android.ui.CardNetwork
 import io.primer.checkout.cobadged.R
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 
 @Composable
-fun CardNetworkSelectionView(
-    cardNetworks: List<CardNetworkDisplay>,
-    selectedCardNetwork: CardNetwork.Type?,
-    onCardNetworkSelected: (CardNetwork.Type) -> Unit,
+fun AllowedCardNetworksView(
+    allowedCardNetworks: List<CardNetworkDisplay>,
     modifier: Modifier = Modifier
 ) {
-    Row {
-        cardNetworks.forEach { cardNetworkDisplay ->
-            cardNetworkDisplay.resource?.toBitmap()?.asImageBitmap()?.let { bitmap ->
+    Row(
+        modifier = modifier
+            .horizontalScroll(rememberScrollState())
+            .padding(
+                top = dimensionResource(id = R.dimen.spacing_half),
+                bottom = dimensionResource(id = R.dimen.spacing_default)
+            )
+    ) {
+        allowedCardNetworks.forEach { cardNetworkMetadata ->
+            cardNetworkMetadata.resource?.toBitmap()?.asImageBitmap()?.let { bitmap ->
                 Image(
                     bitmap = bitmap,
-                    contentDescription = cardNetworkDisplay.displayName,
+                    contentDescription = cardNetworkMetadata.displayName,
                     contentScale = ContentScale.FillHeight,
                     modifier = modifier
-                        .clickable {
-                            onCardNetworkSelected(cardNetworkDisplay.type)
-                        }
+                        .padding(horizontal = dimensionResource(id = R.dimen.spacing_half))
                         .height(dimensionResource(id = R.dimen.card_network_image_size))
-                        .padding(
-                            horizontal = dimensionResource(id = R.dimen.card_network_image_spacing)
-                        )
                         .border(
                             BorderStroke(
                                 width = dimensionResource(
@@ -55,18 +52,8 @@ fun CardNetworkSelectionView(
                                 dimensionResource(id = R.dimen.card_network_image_border_radius)
                             )
                         )
-                        .alpha(
-                            if (cardNetworkDisplay.type == selectedCardNetwork ||
-                                selectedCardNetwork == null
-                            ) {
-                                1.0f
-                            } else {
-                                0.4f
-                            }
-                        )
                 )
             }
         }
-        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.spacing_default)))
     }
 }

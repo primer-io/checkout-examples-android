@@ -1,21 +1,15 @@
 package io.primer.checkout.cobadged.checkout.ui.composable
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.dimensionResource
-import androidx.core.graphics.drawable.toBitmap
 import io.primer.checkout.cobadged.R
 import io.primer.checkout.cobadged.checkout.data.model.CardInput
-import io.primer.checkout.cobadged.checkout.data.model.CardNetworkMetadata
+import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworksState
 import io.primer.checkout.cobadged.checkout.data.model.ValidationErrors
 
@@ -29,7 +23,7 @@ private fun Modifier.cardInputModifier() = composed {
 fun CardForm(
     input: CardInput,
     showCardholderName: Boolean,
-    allowedCardNetworks: List<CardNetworkMetadata>,
+    allowedCardNetworks: List<CardNetworkDisplay>,
     validationErrors: ValidationErrors?,
     cardNetworksState: CardNetworksState?,
     onCardInputChanged: (CardInput) -> Unit,
@@ -48,19 +42,7 @@ fun CardForm(
         cardNetworksState,
         modifier = modifier.cardInputModifier()
     )
-    Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
-        allowedCardNetworks.forEach { cardNetworkMetadata ->
-            cardNetworkMetadata.resource?.toBitmap()?.asImageBitmap()?.let { bitmap ->
-                Image(
-                    bitmap = bitmap,
-                    contentDescription = cardNetworkMetadata.displayName,
-                    modifier = modifier
-                        .padding(horizontal = dimensionResource(id = R.dimen.spacing_half))
-                        .height(dimensionResource(id = R.dimen.card_network_image_size))
-                )
-            }
-        }
-    }
+    AllowedCardNetworksView(allowedCardNetworks = allowedCardNetworks)
     Row {
         CardExpiryDateInput(
             input.expiryDate,

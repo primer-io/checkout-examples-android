@@ -5,7 +5,7 @@
     <string name="open_checkout">Go to checkout</string>
     <string name="client_token">Client token</string>
     <string name="server_url">Server URL</string>
-    <string name="server_url_hint">https://my.server.com:8080</string>
+    <string name="server_url_hint">https://my.glitch.server.com</string>
     <string name="request_client_token">Request new client token</string>
 
     <string name="card_holder_name">Cardholder name</string>

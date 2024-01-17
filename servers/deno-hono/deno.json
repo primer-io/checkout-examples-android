@@ -1,9 +1,0 @@
-{
-  "imports": {
-    "hono/": "https://deno.land/x/hono@v3.10.1/",
-    "std/": "https://deno.land/std@0.206.0/"
-  },
-  "tasks": {
-    "start": "deno run --allow-env --allow-net --allow-read --watch src/main.ts"
-  }
-}

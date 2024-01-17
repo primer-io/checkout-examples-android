@@ -13,7 +13,9 @@
     <dimen name="client_token_field_min_height">120dp</dimen>
 
     <dimen name="card_networks_loader_size">24dp</dimen>
-    <dimen name="card_network_image_size">40dp</dimen>
+    <dimen name="card_network_image_size">24dp</dimen>
+    <dimen name="card_network_image_border_size">0.5dp</dimen>
+    <dimen name="card_network_image_border_radius">4dp</dimen>
     <dimen name="card_network_image_spacing">2dp</dimen>
     <dimen name="loader_size_medium">64dp</dimen>
 </resources>

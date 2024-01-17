@@ -31,7 +31,10 @@ fun CardNumberInputView(
         is CardNetworksState.CardNetworksChanged ->
             CardFormat.valueOf(
                 selectedCardNetwork?.name
-                    ?: cardNetworksState.preferredCardNetwork?.type?.name ?: CardFormat.OTHER.name
+                    ?: cardNetworksState.selectableCardNetworks?.preferred?.type?.name
+                    ?: cardNetworksState.detectCardNetworks.preferred?.type?.name
+                    ?: cardNetworksState.detectCardNetworks.networks.firstOrNull()?.type?.name
+                    ?: CardFormat.OTHER.name
             )
 
         else -> CardFormat.OTHER
@@ -56,14 +59,16 @@ fun CardNumberInputView(
             cardNetworksState?.let { state ->
                 when (state) {
                     is CardNetworksState.CardNetworksChanged -> {
-                        if (state.canSelectCardNetwork) {
+                        state.selectableCardNetworks?.let { cardNetworksMetadata ->
                             CardNetworkSelectionView(
-                                state.availableCardNetworks,
+                                cardNetworksMetadata.networks,
                                 selectedCardNetwork,
                                 onCardNetworkSelected
                             )
-                        } else {
-                            state.availableCardNetworks.firstOrNull()?.let { CardNetworkView(it) }
+                        } ?: run {
+                            val network = state.detectCardNetworks.preferred
+                                ?: state.detectCardNetworks.networks.firstOrNull()
+                            network?.let { CardNetworkPreviewView(it) }
                         }
                     }
 

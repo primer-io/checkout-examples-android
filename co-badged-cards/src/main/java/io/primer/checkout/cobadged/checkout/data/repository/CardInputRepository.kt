@@ -11,9 +11,10 @@ import io.primer.android.components.manager.raw.PrimerHeadlessUniversalCheckoutR
 import io.primer.android.components.manager.raw.PrimerHeadlessUniversalCheckoutRawDataManagerListener
 import io.primer.android.components.ui.assets.PrimerHeadlessUniversalCheckoutAssetsManager
 import io.primer.checkout.cobadged.checkout.data.extension.findErrorById
+import io.primer.checkout.cobadged.checkout.data.extension.toCardNetworksMetadata
 import io.primer.checkout.cobadged.checkout.data.extension.toPrimerCardData
 import io.primer.checkout.cobadged.checkout.data.model.CardInput
-import io.primer.checkout.cobadged.checkout.data.model.CardNetworkMetadata
+import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworksState
 import io.primer.checkout.cobadged.checkout.data.model.CardValidation
 import io.primer.checkout.cobadged.checkout.data.model.ValidationErrors
@@ -33,7 +34,7 @@ interface CardInputRepository {
 
     fun submit()
 
-    fun getAllowedCardsNetworks(): List<CardNetworkMetadata>
+    fun getAllowedCardsNetworks(): List<CardNetworkDisplay>
 }
 
 class PrimerCardInputRepository(@ApplicationContext private val context: Context) :
@@ -70,12 +71,12 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
     }
 
     override fun getAllowedCardsNetworks() =
-        PrimerHeadlessUniversalCheckoutAssetsManager.getAllowedCardsNetworkAssets(context)
-            .values.map { asset ->
-                CardNetworkMetadata(
+        PrimerHeadlessUniversalCheckoutAssetsManager.getAllowedCardNetworkAssets(context)
+            .map { asset ->
+                CardNetworkDisplay(
                     asset.cardNetwork,
-                    asset.cardNetwork.name,
-                    asset.cardNetworkIcon.colored
+                    asset.displayName,
+                    asset.cardImage
                 )
             }
 
@@ -105,31 +106,12 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
                 when (metadataState) {
                     is PrimerCardMetadataState.Fetched ->
                         _cardNetworksState.tryEmit(
-                            metadataState.cardMetadata.let { metadata ->
+                            metadataState.let { metadata ->
                                 CardNetworksState.CardNetworksChanged(
-                                    metadata.canSelectCardNetwork,
-                                    metadata.allowedDetectedCardNetworks.map { primerCardNetwork ->
-                                        CardNetworkMetadata(
-                                            primerCardNetwork.network,
-                                            primerCardNetwork.displayName,
-                                            PrimerHeadlessUniversalCheckoutAssetsManager
-                                                .getCardNetworkAssets(
-                                                    context,
-                                                    primerCardNetwork.network
-                                                ).cardNetworkIcon.colored
-                                        )
-                                    },
-                                    metadata.preferredCardNetwork?.let { primerCardNetwork ->
-                                        CardNetworkMetadata(
-                                            primerCardNetwork.network,
-                                            primerCardNetwork.displayName,
-                                            PrimerHeadlessUniversalCheckoutAssetsManager
-                                                .getCardNetworkAssets(
-                                                    context,
-                                                    primerCardNetwork.network
-                                                ).cardNetworkIcon.colored
-                                        )
-                                    }
+                                    metadata.cardNumberEntryMetadata
+                                        .selectableCardNetworks?.toCardNetworksMetadata(context),
+                                    metadata.cardNumberEntryMetadata
+                                        .detectedCardNetworks.toCardNetworksMetadata(context)
                                 )
                             }
                         )
