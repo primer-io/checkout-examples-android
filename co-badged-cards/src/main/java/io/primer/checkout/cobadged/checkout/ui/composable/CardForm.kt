@@ -9,7 +9,6 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.res.dimensionResource
 import io.primer.checkout.cobadged.R
 import io.primer.checkout.cobadged.checkout.data.model.CardInput
-import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworksState
 import io.primer.checkout.cobadged.checkout.data.model.ValidationErrors
 
@@ -23,7 +22,6 @@ private fun Modifier.cardInputModifier() = composed {
 fun CardForm(
     input: CardInput,
     showCardholderName: Boolean,
-    allowedCardNetworks: List<CardNetworkDisplay>,
     validationErrors: ValidationErrors?,
     cardNetworksState: CardNetworksState?,
     onCardInputChanged: (CardInput) -> Unit,
@@ -34,15 +32,13 @@ fun CardForm(
         onValueChanged = { cardNumber ->
             onCardInputChanged(input.copy(cardNumber = cardNumber))
         },
-        input.preferredCardNetwork,
         validationErrors?.cardNumber,
         onCardNetworkSelected = { cardNetwork ->
-            onCardInputChanged(input.copy(preferredCardNetwork = cardNetwork))
+            onCardInputChanged(input.copy(cardNetwork = cardNetwork))
         },
         cardNetworksState,
         modifier = modifier.cardInputModifier()
     )
-    AllowedCardNetworksView(allowedCardNetworks = allowedCardNetworks)
     Row {
         CardExpiryDateInput(
             input.expiryDate,

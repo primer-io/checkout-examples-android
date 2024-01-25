@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
@@ -25,10 +29,12 @@ import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 @Composable
 fun CardNetworkSelectionView(
     cardNetworks: List<CardNetworkDisplay>,
-    selectedCardNetwork: CardNetwork.Type?,
+    preferredNetwork: CardNetwork.Type?,
     onCardNetworkSelected: (CardNetwork.Type) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var selectedCardNetwork by remember { mutableStateOf(preferredNetwork) }
+
     Row {
         cardNetworks.forEach { cardNetworkDisplay ->
             cardNetworkDisplay.resource?.toBitmap()?.asImageBitmap()?.let { bitmap ->
@@ -38,6 +44,7 @@ fun CardNetworkSelectionView(
                     contentScale = ContentScale.FillHeight,
                     modifier = modifier
                         .clickable {
+                            selectedCardNetwork = cardNetworkDisplay.type
                             onCardNetworkSelected(cardNetworkDisplay.type)
                         }
                         .height(dimensionResource(id = R.dimen.card_network_image_size))
@@ -56,8 +63,7 @@ fun CardNetworkSelectionView(
                             )
                         )
                         .alpha(
-                            if (cardNetworkDisplay.type == selectedCardNetwork ||
-                                selectedCardNetwork == null
+                            if (cardNetworkDisplay.type == selectedCardNetwork
                             ) {
                                 1.0f
                             } else {

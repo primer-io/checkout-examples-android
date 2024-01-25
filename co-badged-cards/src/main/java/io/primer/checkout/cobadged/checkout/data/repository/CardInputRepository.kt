@@ -9,12 +9,10 @@ import io.primer.android.components.domain.inputs.models.PrimerInputElementType
 import io.primer.android.components.manager.raw.PrimerHeadlessUniversalCheckoutRawDataManager
 import io.primer.android.components.manager.raw.PrimerHeadlessUniversalCheckoutRawDataManagerInterface
 import io.primer.android.components.manager.raw.PrimerHeadlessUniversalCheckoutRawDataManagerListener
-import io.primer.android.components.ui.assets.PrimerHeadlessUniversalCheckoutAssetsManager
 import io.primer.checkout.cobadged.checkout.data.extension.findErrorById
-import io.primer.checkout.cobadged.checkout.data.extension.toCardNetworksMetadata
+import io.primer.checkout.cobadged.checkout.data.extension.toCardNetworkDisplay
 import io.primer.checkout.cobadged.checkout.data.extension.toPrimerCardData
 import io.primer.checkout.cobadged.checkout.data.model.CardInput
-import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworksState
 import io.primer.checkout.cobadged.checkout.data.model.CardValidation
 import io.primer.checkout.cobadged.checkout.data.model.ValidationErrors
@@ -33,8 +31,6 @@ interface CardInputRepository {
     fun updateCardData(cardInput: CardInput)
 
     fun submit()
-
-    fun getAllowedCardsNetworks(): List<CardNetworkDisplay>
 }
 
 class PrimerCardInputRepository(@ApplicationContext private val context: Context) :
@@ -70,16 +66,6 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
         rawDataManager.submit()
     }
 
-    override fun getAllowedCardsNetworks() =
-        PrimerHeadlessUniversalCheckoutAssetsManager.getAllowedCardNetworkAssets(context)
-            .map { asset ->
-                CardNetworkDisplay(
-                    asset.cardNetwork,
-                    asset.displayName,
-                    asset.cardImage
-                )
-            }
-
     override fun onValidationChanged(
         isValid: Boolean,
         errors: List<PrimerInputValidationError>
@@ -106,12 +92,24 @@ class PrimerCardInputRepository(@ApplicationContext private val context: Context
                 when (metadataState) {
                     is PrimerCardMetadataState.Fetched ->
                         _cardNetworksState.tryEmit(
-                            metadataState.let { metadata ->
+                            metadataState.cardNumberEntryMetadata.let { metadata ->
+                                val selectableNetworks = metadata
+                                    .selectableCardNetworks?.items
+                                val detectedNonSelectableNetwork =
+                                    metadata.detectedCardNetworks.let {
+                                        it.preferred ?: it.items.firstOrNull()
+                                    }
+                                val resolvedNetworks = selectableNetworks
+                                    ?: listOf(detectedNonSelectableNetwork)
+
                                 CardNetworksState.CardNetworksChanged(
-                                    metadata.cardNumberEntryMetadata
-                                        .selectableCardNetworks?.toCardNetworksMetadata(context),
-                                    metadata.cardNumberEntryMetadata
-                                        .detectedCardNetworks.toCardNetworksMetadata(context)
+                                    resolvedNetworks.mapNotNull { network ->
+                                        network?.toCardNetworkDisplay(
+                                            context
+                                        )
+                                    },
+                                    selectableNetworks != null,
+                                    metadata.selectableCardNetworks?.preferred?.network
                                 )
                             }
                         )

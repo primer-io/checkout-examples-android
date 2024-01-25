@@ -8,7 +8,7 @@ data class CardInput(
     val expiryDateFormatted: String,
     val cvv: String,
     val cardHolderName: String?,
-    val preferredCardNetwork: CardNetwork.Type?
+    val cardNetwork: CardNetwork.Type?
 ) {
 
     companion object {

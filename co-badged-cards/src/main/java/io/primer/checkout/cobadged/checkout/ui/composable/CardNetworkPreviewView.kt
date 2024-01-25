@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -43,6 +44,13 @@ fun CardNetworkPreviewView(
                         RoundedCornerShape(
                             dimensionResource(id = R.dimen.card_network_image_border_radius)
                         )
+                    )
+                    .alpha(
+                        if (cardNetworkDisplay.allowed) {
+                            1.0f
+                        } else {
+                            0.4f
+                        }
                     )
             )
         }

@@ -49,7 +49,6 @@ fun CardScreen(
             is CardFormUiState.ShowCardForm -> CardView(
                 modifier.padding(contentPaddings),
                 state.showCardholderName,
-                state.allowedCardNetworks,
                 viewModel
             )
         }

@@ -8,5 +8,5 @@ fun CardInput.toPrimerCardData() = PrimerCardData(
     expiryDateFormatted,
     cvv,
     cardHolderName,
-    preferredCardNetwork
+    cardNetwork
 )

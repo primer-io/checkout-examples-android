@@ -21,7 +21,6 @@ import io.primer.checkout.cobadged.checkout.ui.formatting.MaskVisualTransformati
 fun CardNumberInputView(
     value: String,
     onValueChanged: (String) -> Unit,
-    selectedCardNetwork: CardNetwork.Type?,
     error: String?,
     onCardNetworkSelected: (CardNetwork.Type) -> Unit,
     cardNetworksState: CardNetworksState?,
@@ -30,10 +29,7 @@ fun CardNumberInputView(
     val cardFormat = when (cardNetworksState) {
         is CardNetworksState.CardNetworksChanged ->
             CardFormat.valueOf(
-                selectedCardNetwork?.name
-                    ?: cardNetworksState.selectableCardNetworks?.preferred?.type?.name
-                    ?: cardNetworksState.detectCardNetworks.preferred?.type?.name
-                    ?: cardNetworksState.detectCardNetworks.networks.firstOrNull()?.type?.name
+                cardNetworksState.networks.firstOrNull()?.type?.name
                     ?: CardFormat.OTHER.name
             )
 
@@ -59,16 +55,17 @@ fun CardNumberInputView(
             cardNetworksState?.let { state ->
                 when (state) {
                     is CardNetworksState.CardNetworksChanged -> {
-                        state.selectableCardNetworks?.let { cardNetworksMetadata ->
-                            CardNetworkSelectionView(
-                                cardNetworksMetadata.networks,
-                                selectedCardNetwork,
+                        when (state.shouldDisplaySelection) {
+                            true -> CardNetworkSelectionView(
+                                state.networks,
+                                state.preferredSelectableNetwork,
                                 onCardNetworkSelected
                             )
-                        } ?: run {
-                            val network = state.detectCardNetworks.preferred
-                                ?: state.detectCardNetworks.networks.firstOrNull()
-                            network?.let { CardNetworkPreviewView(it) }
+
+                            false -> state.networks.firstOrNull()
+                                ?.let { preferredNetwork ->
+                                    CardNetworkPreviewView(preferredNetwork)
+                                }
                         }
                     }
 

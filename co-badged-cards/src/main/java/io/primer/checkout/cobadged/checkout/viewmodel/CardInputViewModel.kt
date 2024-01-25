@@ -9,7 +9,6 @@ import io.primer.checkout.cobadged.checkout.data.repository.CardInputRepository
 import io.primer.checkout.cobadged.checkout.data.repository.PrimerHeadlessEvent
 import io.primer.checkout.cobadged.checkout.data.repository.PrimerHeadlessRepository
 import io.primer.checkout.cobadged.checkout.data.model.CardInput
-import io.primer.checkout.cobadged.checkout.data.model.CardNetworkDisplay
 import io.primer.checkout.cobadged.checkout.data.model.CardNetworksState
 import io.primer.checkout.cobadged.checkout.data.model.CardValidation
 import io.primer.checkout.cobadged.checkout.data.repository.DefaultPrimerHeadlessRepository.Companion.CARD_PAYMENT_METHOD_TYPE
@@ -20,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,8 +29,7 @@ sealed class CardFormUiState {
     data object Initializing : CardFormUiState()
 
     data class ShowCardForm(
-        val showCardholderName: Boolean,
-        val allowedCardNetworks: List<CardNetworkDisplay>
+        val showCardholderName: Boolean
     ) : CardFormUiState()
 
     data object Submitted : CardFormUiState()
@@ -55,7 +54,15 @@ class CardInputViewModel @Inject constructor(
 
     val cardValidationEvents: Flow<CardValidation> = cardInputRepository.validationEvents
     val cardNetworksStateEvents: Flow<CardNetworksState> =
-        cardInputRepository.cardNetworksState
+        cardInputRepository.cardNetworksState.onEach { cardNetworkState ->
+            when (cardNetworkState) {
+                is CardNetworksState.CardNetworksChanged -> _cardInput.update {
+                    it.copy(cardNetwork = cardNetworkState.preferredSelectableNetwork)
+                }
+
+                CardNetworksState.CardNetworksLoading -> Unit
+            }
+        }
 
     fun onCardInputChanged(cardInput: CardInput) = _cardInput.update {
         cardInput
@@ -102,8 +109,7 @@ class CardInputViewModel @Inject constructor(
         if (isCardPaymentAllowed) {
             _cardFormUiState.update {
                 CardFormUiState.ShowCardForm(
-                    cardInputRepository.isCardholderNameEnabled(),
-                    cardInputRepository.getAllowedCardsNetworks()
+                    cardInputRepository.isCardholderNameEnabled()
                 )
             }
         } else {
