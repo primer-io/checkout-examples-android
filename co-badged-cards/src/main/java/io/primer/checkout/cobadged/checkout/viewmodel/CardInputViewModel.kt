@@ -56,9 +56,14 @@ class CardInputViewModel @Inject constructor(
     val cardNetworksStateEvents: Flow<CardNetworksState> =
         cardInputRepository.cardNetworksState.onEach { cardNetworkState ->
             when (cardNetworkState) {
-                is CardNetworksState.CardNetworksChanged -> _cardInput.update {
-                    it.copy(cardNetwork = cardNetworkState.preferredSelectableNetwork)
-                }
+                // we can preselect card whenever we have selectable network,
+                // or clean previous input
+                is CardNetworksState.CardNetworksChanged ->
+                    onCardInputChanged(
+                        _cardInput.value.copy(
+                            cardNetwork = cardNetworkState.preferredSelectableNetwork
+                        )
+                    )
 
                 CardNetworksState.CardNetworksLoading -> Unit
             }
