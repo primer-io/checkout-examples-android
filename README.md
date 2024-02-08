@@ -1,9 +1,9 @@
-# Checkout Examples for Primer Android SDK
+![Primer Banner](./images/primer-banner.png)
 
-This repo contains examples of how to try out and how to integrate Primer's Android SDK.
+# 💳 Checkout Example for Primer Android SDK
 
-Each example is focused on one aspect of the integration path.
+This repository contains examples of how to integrate [Primer's Android SDK](https://primer.io/docs/sdk/android/2.x.x/).
 
-| Example                                | Description |
-|----------------------------------------| ----------- |
-| 💳 [Co-Badged Cards](/co-badged-cards) | This example demonstrates how to integrate co-badged card support if you are offering support to your customers for a relevant network, such as Cartes Bancaires |
+| Example | Description |
+| ------- | ----------- |
+| [Co-Badged Cards on Headless Checkout](/co-badged-cards) | This example demonstrates how to integrate a simple card form using Headless Checkout that handles co-badged cards. |

@@ -19,6 +19,10 @@ Select `co-badged-cards` configuration and run the project.
 Refer to the instructions provided in the [example-backend Readme](https://github.com/primer-io/example-backend/blob/main/README.md) 
 to set up the server for generating the client token needed to initialize the SDK.
 
+----
+
+This project requires a server to communicate with Primer's API. To get started quickly, we encourage you to use the [companion backend](https://github.com/primer-io/example-backend).
+
 #### Setting Checkout Backend URL
 
 - You can set the URL of the checkout backend to initiate the checkout generated in step 3.
