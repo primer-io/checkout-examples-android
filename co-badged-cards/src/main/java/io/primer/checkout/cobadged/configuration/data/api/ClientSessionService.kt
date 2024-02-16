@@ -23,6 +23,7 @@ interface ClientSessionService {
 
     companion object {
 
+        // A base URL for your Glitch server
         const val BASE_URL = "https://my.glitch.server.com"
         private const val DEFAULT_CONTENT_TYPE = "application/json"
 
