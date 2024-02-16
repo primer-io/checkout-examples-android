@@ -2,14 +2,12 @@ package io.primer.checkout.cobadged.configuration.data.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import io.primer.checkout.cobadged.BuildConfig
-import io.primer.checkout.cobadged.configuration.data.model.ClientSessionRequest
 import io.primer.checkout.cobadged.configuration.data.model.ClientSessionResponse
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Url
 
@@ -17,8 +15,7 @@ interface ClientSessionService {
 
     @POST
     suspend fun createClientSession(
-        @Url url: String,
-        @Body request: ClientSessionRequest
+        @Url url: String
     ): ClientSessionResponse
 
     companion object {

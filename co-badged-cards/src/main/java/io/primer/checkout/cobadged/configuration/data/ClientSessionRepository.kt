@@ -2,7 +2,6 @@ package io.primer.checkout.cobadged.configuration.data
 
 import android.net.Uri
 import io.primer.checkout.cobadged.configuration.data.api.ClientSessionService
-import io.primer.checkout.cobadged.configuration.data.model.ClientSessionRequest
 import javax.inject.Inject
 
 fun interface ClientSessionRepository {
@@ -16,8 +15,7 @@ class DefaultClientSessionRepository @Inject constructor(
 
     override suspend fun createClientSession(url: String) = runCatching {
         clientSessionService.createClientSession(
-            Uri.parse(url).buildUpon().appendPath(CLIENT_SESSION_PATH).build().toString(),
-            ClientSessionRequest(1000, "EUR")
+            Uri.parse(url).buildUpon().appendPath(CLIENT_SESSION_PATH).build().toString()
         ).clientToken
     }
 
