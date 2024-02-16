@@ -1,7 +1,7 @@
 *.iml
 .gradle
 /local.properties
-.idea/
+.idea/*
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
@@ -11,3 +11,9 @@ render.experimental.xml
 .externalNativeBuild
 .cxx
 local.properties
+
+# security
+*.pem
+*.crt
+.env/
+.env.example
