@@ -26,14 +26,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.primer.checkout.dropin.R
 import io.primer.checkout.dropin.configuration.viewmodel.CheckoutConfigurationViewModel
+import io.primer.checkout.dropin.result.ui.CheckoutResult
 
 @Composable
 fun CheckoutConfigurationScreen(
-    onNavigateToCheckout: (String) -> Unit,
+    onCheckoutResult: (CheckoutResult) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CheckoutConfigurationViewModel = hiltViewModel()
 ) {
     val checkoutUiState by viewModel.checkoutUiState.collectAsState()
+    val checkoutResult by viewModel.checkoutResult.collectAsState()
+    viewModel.setCustomErrorMessage(stringResource(id = R.string.error_handler_custom_message))
 
     Column(
         modifier
@@ -95,7 +98,9 @@ fun CheckoutConfigurationScreen(
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_default)))
 
         Button(
-            onClick = { onNavigateToCheckout.invoke(checkoutUiState.clientTokenState.clientToken) },
+            onClick = {
+                viewModel.startCheckout(checkoutUiState.clientTokenState.clientToken)
+            },
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth(),
@@ -118,6 +123,11 @@ fun CheckoutConfigurationScreen(
                     )
                 }
             }
+        }
+
+        checkoutResult?.let {
+            onCheckoutResult(it)
+            viewModel.resetCheckoutResult()
         }
     }
 }

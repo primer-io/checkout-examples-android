@@ -1,6 +1,6 @@
-# 💳 Co-Badged Cards Example
+# 💳 DropIn Checkout Example
 
-This example demonstrates how to integrate support for co-badged cards in your Android app.
+This example demonstrates how to integrate support for DropIn Checkout in your Android app.
 
 ## Getting Started
 
@@ -53,33 +53,17 @@ We have organized our code into two repositories to streamline the integration p
 
 #### 1. Primer Headless Initialization and Events
 
-- [PrimerHeadlessRepository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/PrimerHeadlessRepository.kt) 
+- [PrimerDropInRepository](src/main/java/io/primer/checkout/dropin/checkout/data/repository/PrimerDropInRepository.kt) 
   contains the necessary code for initializing the Primer Headless SDK and managing checkout lifecycle events.
 - Use this repository to set up the base structure and manage Primer Headless events within your application.
 
-
-#### 2. Card Input Functions using `PrimerHeadlessUniversalCheckoutRawDataManager`
-
-- [CardInputRepository](src/main/java/io/primer/checkout/cobadged/checkout/data/repository/CardInputRepository.kt)
-  focuses specifically on card input functions leveraging the `PrimerHeadlessUniversalCheckoutRawDataManager`.
-- It provides functions and utilities for handling card inputs during the checkout process.
 
 ### UI/Presentation
 
 We have organized our code into two ViewModels to streamline the integration process:
 
-#### 1. Primer Headless Initialization and Events
+#### 1. Primer DropIn Initialization and Events
 
 - [CheckoutConfigurationViewModel](src/main/java/io/primer/checkout/cobadged/configuration/viewmodel/CheckoutConfigurationViewModel.kt)
   focuses on retrieving and validating client token needed for SDK initialization.
 
-#### 2. Card Input Functions using `CardInputViewModel`
-
-- [CardInputViewModel](src/main/java/io/primer/checkout/cobadged/checkout/viewmodel/CardInputViewModel.kt)
-  focuses specifically on card input functions leveraging the `CardInputRepository`.
-- It provides functions and utilities for handling card inputs during the checkout process.
-
-#### 3. Card Screen presentation using `CardScreen`
-
-- [CardScreen](src/main/java/io/primer/checkout/cobadged/checkout/ui/CardScreen.kt)
-  is a Composable that presents the card screen.
