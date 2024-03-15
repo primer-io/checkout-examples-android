@@ -142,9 +142,8 @@ class CheckoutConfigurationViewModel @Inject constructor(
 
     private fun handleCheckoutError(
         errorMessage: String,
-        checkoutData: PrimerCheckoutData?,
+        checkoutData: PrimerCheckoutData?
     ) {
-
         _checkoutResult.update {
             CheckoutResult.Failed(
                 errorMessage,

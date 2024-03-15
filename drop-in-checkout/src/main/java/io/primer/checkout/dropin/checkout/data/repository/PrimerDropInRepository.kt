@@ -46,27 +46,28 @@ class DefaultPrimerDropInRepository @Inject constructor(
     }
 
     override val primerDropInEvents: Flow<PrimerDropInEvent> = callbackFlow {
-        dropInCheckout.configure(listener = object : PrimerCheckoutListener {
+        dropInCheckout.configure(
+            listener = object : PrimerCheckoutListener {
 
-            override fun onCheckoutCompleted(checkoutData: PrimerCheckoutData) {
-                trySend(PrimerDropInEvent.CheckoutCompleted(checkoutData))
-            }
+                override fun onCheckoutCompleted(checkoutData: PrimerCheckoutData) {
+                    trySend(PrimerDropInEvent.CheckoutCompleted(checkoutData))
+                }
 
-            override fun onFailed(
-                error: PrimerError,
-                checkoutData: PrimerCheckoutData?,
-                errorHandler: PrimerErrorDecisionHandler?
-            ) {
-                errorHandler?.showErrorMessage(customErrorMessage)
-                trySend(
-                    PrimerDropInEvent.CheckoutFailed(
-                        error.description,
-                        checkoutData,
-                        errorHandler
+                override fun onFailed(
+                    error: PrimerError,
+                    checkoutData: PrimerCheckoutData?,
+                    errorHandler: PrimerErrorDecisionHandler?
+                ) {
+                    errorHandler?.showErrorMessage(customErrorMessage)
+                    trySend(
+                        PrimerDropInEvent.CheckoutFailed(
+                            error.description,
+                            checkoutData,
+                            errorHandler
+                        )
                     )
-                )
+                }
             }
-        }
         )
 
         awaitClose {
