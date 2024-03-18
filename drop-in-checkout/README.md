@@ -54,8 +54,8 @@ We have organized our code into two repositories to streamline the integration p
 #### 1. Primer Headless Initialization and Events
 
 - [PrimerDropInRepository](src/main/java/io/primer/checkout/dropin/checkout/data/repository/PrimerDropInRepository.kt) 
-  contains the necessary code for initializing the Primer Headless SDK and managing checkout lifecycle events.
-- Use this repository to set up the base structure and manage Primer Headless events within your application.
+  contains the necessary code for initializing the Primer Universal Checkout SDK and managing checkout lifecycle events.
+- Use this repository to set up the base structure and manage Primer Universal Checkout events within your application.
 
 
 ### UI/Presentation
