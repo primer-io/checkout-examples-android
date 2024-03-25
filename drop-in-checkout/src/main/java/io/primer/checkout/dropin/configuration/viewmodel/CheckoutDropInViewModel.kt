@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckoutConfigurationViewModel @Inject constructor(
+class CheckoutDropInViewModel @Inject constructor(
     private val clientSessionRepository: ClientSessionRepository,
     private val clientTokenValidator: ClientTokenValidator,
     private val dropInRepository: PrimerDropInRepository,
@@ -99,10 +99,6 @@ class CheckoutConfigurationViewModel @Inject constructor(
         dropInRepository.apply {
             start(clientToken)
         }
-    }
-
-    fun setCustomErrorMessage(message: String?) {
-        dropInRepository.setCustomErrorMessage(message)
     }
 
     fun resetCheckoutResult() {

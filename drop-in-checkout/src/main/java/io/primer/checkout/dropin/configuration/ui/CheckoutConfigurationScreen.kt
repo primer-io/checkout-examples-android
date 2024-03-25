@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import io.primer.checkout.dropin.R
-import io.primer.checkout.dropin.configuration.viewmodel.CheckoutConfigurationViewModel
+import io.primer.checkout.dropin.configuration.viewmodel.CheckoutDropInViewModel
 import io.primer.checkout.dropin.result.ui.CheckoutResult
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,11 +38,10 @@ import io.primer.checkout.dropin.result.ui.CheckoutResult
 fun CheckoutConfigurationScreen(
     onCheckoutResult: (CheckoutResult) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CheckoutConfigurationViewModel = hiltViewModel()
+    viewModel: CheckoutDropInViewModel = hiltViewModel()
 ) {
     val checkoutUiState by viewModel.checkoutUiState.collectAsState()
     val checkoutResult by viewModel.checkoutResult.collectAsState()
-    viewModel.setCustomErrorMessage(stringResource(id = R.string.error_handler_custom_message))
 
     Scaffold(
         modifier = modifier

@@ -19,8 +19,6 @@ interface PrimerDropInRepository {
 
     fun start(clientToken: String)
 
-    fun setCustomErrorMessage(message: String?)
-
     val primerDropInEvents: Flow<PrimerDropInEvent>
 }
 
@@ -35,15 +33,11 @@ sealed class PrimerDropInEvent {
 }
 
 class DefaultPrimerDropInRepository @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val errorMapper: ErrorMapper
 ) : PrimerDropInRepository {
 
     private val dropInCheckout = Primer.instance
-    private var customErrorMessage: String? = null
-
-    override fun setCustomErrorMessage(message: String?) {
-        customErrorMessage = message
-    }
 
     override val primerDropInEvents: Flow<PrimerDropInEvent> = callbackFlow {
         dropInCheckout.configure(
@@ -58,7 +52,7 @@ class DefaultPrimerDropInRepository @Inject constructor(
                     checkoutData: PrimerCheckoutData?,
                     errorHandler: PrimerErrorDecisionHandler?
                 ) {
-                    errorHandler?.showErrorMessage(customErrorMessage)
+                    errorHandler?.showErrorMessage(errorMapper.toErrorMessage(error, checkoutData))
                     trySend(
                         PrimerDropInEvent.CheckoutFailed(
                             error.description,

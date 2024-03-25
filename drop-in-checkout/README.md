@@ -51,7 +51,7 @@ For easier separation of concerns, application was split into:
 
 We have organized our code into two repositories to streamline the integration process:
 
-#### 1. Primer Headless Initialization and Events
+#### 1. Primer DropIn Initialization and Events
 
 - [PrimerDropInRepository](src/main/java/io/primer/checkout/dropin/checkout/data/repository/PrimerDropInRepository.kt) 
   contains the necessary code for initializing the Primer Universal Checkout SDK and managing checkout lifecycle events.
@@ -64,6 +64,6 @@ We have organized our code into two ViewModels to streamline the integration pro
 
 #### 1. Primer DropIn Initialization and Events
 
-- [CheckoutConfigurationViewModel](src/main/java/io/primer/checkout/cobadged/configuration/viewmodel/CheckoutConfigurationViewModel.kt)
+- [CheckoutDropInViewModel](src/main/java/io/primer/checkout/cobadged/configuration/viewmodel/CheckoutConfigurationViewModel.kt)
   focuses on retrieving and validating client token needed for SDK initialization.
 
