@@ -1,4 +1,4 @@
-package io.primer.checkout.cobadged.configuration.ui
+package io.primer.checkout.dropin.configuration.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -29,17 +29,19 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import io.primer.checkout.cobadged.R
-import io.primer.checkout.cobadged.configuration.viewmodel.CheckoutConfigurationViewModel
+import io.primer.checkout.dropin.R
+import io.primer.checkout.dropin.configuration.viewmodel.CheckoutDropInViewModel
+import io.primer.checkout.dropin.result.ui.CheckoutResult
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CheckoutConfigurationScreen(
-    onNavigateToCheckout: (String) -> Unit,
+    onCheckoutResult: (CheckoutResult) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CheckoutConfigurationViewModel = hiltViewModel()
+    viewModel: CheckoutDropInViewModel = hiltViewModel()
 ) {
     val checkoutUiState by viewModel.checkoutUiState.collectAsState()
+    val checkoutResult by viewModel.checkoutResult.collectAsState()
 
     Scaffold(
         modifier = modifier
@@ -118,7 +120,7 @@ fun CheckoutConfigurationScreen(
 
             Button(
                 onClick = {
-                    onNavigateToCheckout.invoke(checkoutUiState.clientTokenState.clientToken)
+                    viewModel.startCheckout(checkoutUiState.clientTokenState.clientToken)
                 },
                 modifier = modifier
                     .align(Alignment.CenterHorizontally)
@@ -148,6 +150,11 @@ fun CheckoutConfigurationScreen(
                         )
                     }
                 }
+            }
+
+            checkoutResult?.let {
+                onCheckoutResult(it)
+                viewModel.resetCheckoutResult()
             }
         }
     }
