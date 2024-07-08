@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import io.primer.checkout.dropin.configuration.extensions.parcelable
+import io.primer.checkout.dropin.configuration.extensions.getParcelableCompat
 import io.primer.checkout.dropin.configuration.ui.CheckoutConfigurationScreen
 import io.primer.checkout.dropin.navigation.DropInCheckoutArguments.RESULT_ARGUMENT
 import io.primer.checkout.dropin.navigation.DropInCheckoutDestinations.RESULT_SCREEN_ROUTE
@@ -44,7 +44,7 @@ fun DropInCheckoutNavGraph(
             )
         ) { currentBackStackEntry ->
             val checkoutResult = requireNotNull(
-                currentBackStackEntry.arguments?.parcelable<CheckoutResult>(
+                currentBackStackEntry.arguments?.getParcelableCompat<CheckoutResult>(
                     RESULT_ARGUMENT
                 )
             )
@@ -64,7 +64,7 @@ fun DropInCheckoutNavGraph(
 
 class CheckoutResultParamType : NavType<CheckoutResult>(isNullableAllowed = false) {
     override fun get(bundle: Bundle, key: String): CheckoutResult? {
-        return bundle.parcelable(key)
+        return bundle.getParcelableCompat(key)
     }
 
     override fun parseValue(value: String): CheckoutResult {

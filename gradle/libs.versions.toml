@@ -15,30 +15,31 @@
 ##
 [versions]
 accessibilityTestFramework = "4.0.0"
-activityCompose = "1.8.2"
+activityCompose = "1.9.0"
 androidGradlePlugin = "8.1.4"
 # @keep
 compileSdk = "33"
-composeLatest = "1.6.0-beta03"
-composeBom = "2023.10.01"
-compose-compiler = "1.5.3"
+compose = "1.6.8"
+composeBom = "2024.06.00"
+compose-compiler = "1.5.14"
 coreTesting = "2.2.0"
-coroutines = "1.7.3"
-espresso = "3.5.1"
+coroutines = "1.8.0"
+espresso = "3.6.1"
 gradle = "7.2.0"
 gson = "2.10.1"
-hilt = "2.48"
-hiltNavigationCompose = "1.1.0"
+hilt = "2.49"
+hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
-kotlin = "1.9.10"
+primer-stripe = "1.1.0" # TODO TWS: use release version
+kotlin = "1.9.24"
 ktlint = "0.40.0"
-ktx = "1.12.0"
-lifecycle = "2.7.0"
+ktx = "1.13.1"
+lifecycle = "2.8.3"
 lifecycleRuntimeKtx = "2.6.2"
-material3 = "1.1.2"
+material3 = "1.2.1"
 # @keep
 minSdk = "23"
-navigation = "2.7.6"
+navigation = "2.7.7"
 okhttpLogging = "4.12.0"
 retrofit = "2.9.0"
 retrofitSerialization = "1.0.0"
@@ -46,14 +47,16 @@ kotlinSerialization = "1.6.2"
 runner = "1.0.1"
 # @keep
 targetSdk = "33"
-testExtJunit = "1.1.5"
-uiAutomator = "2.2.0"
-viewModelCompose = "2.7.0"
+testExtJunit = "1.2.1"
+uiAutomator = "2.3.0"
+viewModelCompose = "2.8.3"
 
-ksp = "1.9.10-1.0.13"
-ktLint = "11.6.1"
-primerSdk = "2.25.0"
-primer3dsSdk = "1.4.1"
+ksp = "1.9.24-1.0.20"
+ktLint = "12.1.0"
+primerSdk = "2.27.4-dropinmock" # TODO TWS: use release version
+primer3dsSdk = "1.4.2"
+uiToolingPreviewAndroid = "1.6.8"
+uiTooling = "1.6.8"
 
 [libraries]
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
@@ -61,13 +64,13 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-arch-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeLatest" }
-androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "composeLatest" }
-androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "composeLatest" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
+androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeLatest" }
-androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeLatest" }
-androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "composeLatest" }
+androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "ktx" }
@@ -93,10 +96,13 @@ material = { module = "androidx.compose.material3:material3", version.ref = "mat
 okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttpLogging" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit2-converter-kotlinx-serialization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofitSerialization" }
-kotlinx-serialization-json = {  module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 
 primer-sdk = { module = "io.primer:android", version.ref = "primerSdk" }
 primer-threeds-sdk = { module = "io.primer:3ds-android", version.ref = "primer3dsSdk" }
+primer-stripe = { group = "io.primer", name = "stripe-android", version.ref = "primer-stripe" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

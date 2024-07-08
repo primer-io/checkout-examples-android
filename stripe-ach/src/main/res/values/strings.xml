@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Stripe ACH</string>
+    <string name="main_title">Stripe ACH Example App</string>
+    <string name="settings_title">Configure the example app</string>
+    <string name="settings_description">To initiate the checkout process, input your manually generated client token or input the address of the server you\'ve created using the guidelines outlined in our README.</string>
+    <string name="open_checkout">Go to checkout</string>
+    <string name="client_token">Client token</string>
+    <string name="server_url">Server URL</string>
+    <string name="server_url_hint">https://my.glitch.server.com</string>
+    <string name="request_client_token">Request new client token</string>
+
+    <string name="stripe_ach_title">Pay by Stripe ACH</string>
+
+    <string name="stripe_ach_first_name_text">First name</string>
+    <string name="stripe_ach_first_name_error_text">Please enter a valid first name</string>
+    <string name="stripe_ach_last_name_text">Last name</string>
+    <string name="stripe_ach_last_name_error_text">Please enter a valid last name</string>
+    <string name="stripe_ach_email_address_text">Email address</string>
+    <string name="stripe_ach_email_address_error_text">Please enter a valid email address</string>
+    <string name="stripe_ach_submit_text">Submit</string>
+
+    <string name="stripe_ach_mandate_dialog_title">Stripe ACH mandate</string>
+    <string name="stripe_ach_mandate_dialog_text">Would you like to accept this mandate?</string>
+    <string name="stripe_ach_mandate_dialog_decline_text">Decline</string>
+    <string name="stripe_ach_mandate_dialog_accept_text">Accept</string>
+
+    <string name="result_title">Result</string>
+    <string name="menu_back">Back</string>
+
+    <string name="result_success">✅ Success</string>
+    <string name="result_fail">❌ Fail</string>
+    <string name="result_order_id_placeholder">Order id: %s</string>
+    <string name="result_payment_id_placeholder">Payment id: %s</string>
+</resources>

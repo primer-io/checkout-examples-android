@@ -20,3 +20,4 @@ dependencyResolutionManagement {
 rootProject.name = "Checkout Examples"
 include(":co-badged-cards")
 include(":drop-in-checkout")
+include(":stripe-ach")

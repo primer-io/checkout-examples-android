@@ -14,7 +14,7 @@ import io.primer.checkout.cobadged.navigation.CoBadgedCardsArguments.CLIENT_TOKE
 import io.primer.checkout.cobadged.navigation.CoBadgedCardsArguments.RESULT_ARGUMENT
 import io.primer.checkout.cobadged.navigation.CoBadgedCardsDestinations.RESULT_SCREEN_ROUTE
 import io.primer.checkout.cobadged.checkout.ui.CardScreen
-import io.primer.checkout.cobadged.configuration.extensions.parcelable
+import io.primer.checkout.cobadged.configuration.extensions.getParcelableCompat
 import io.primer.checkout.cobadged.configuration.ui.CheckoutConfigurationScreen
 import io.primer.checkout.cobadged.navigation.CoBadgedCardsDestinations.SETTINGS_ROUTE
 import io.primer.checkout.cobadged.result.ui.CheckoutResult
@@ -66,7 +66,7 @@ fun CoBadgedCardsNavGraph(
             )
         ) { currentBackStackEntry ->
             val checkoutResult = requireNotNull(
-                currentBackStackEntry.arguments?.parcelable<CheckoutResult>(
+                currentBackStackEntry.arguments?.getParcelableCompat<CheckoutResult>(
                     RESULT_ARGUMENT
                 )
             )
@@ -86,7 +86,7 @@ fun CoBadgedCardsNavGraph(
 
 class CheckoutResultParamType : NavType<CheckoutResult>(isNullableAllowed = false) {
     override fun get(bundle: Bundle, key: String): CheckoutResult? {
-        return bundle.parcelable(key)
+        return bundle.getParcelableCompat(key)
     }
 
     override fun parseValue(value: String): CheckoutResult {
