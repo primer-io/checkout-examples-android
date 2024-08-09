@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.secrets)
 }
 
 android {
@@ -39,7 +40,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    secrets {
+        propertiesFileName = "local.properties"
 
+        // A properties file containing default secret values. This file can be checked in version
+        // control.
+        defaultPropertiesFileName = "secrets.defaults.properties"
+    }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
 

@@ -108,7 +108,7 @@ class DefaultPrimerHeadlessRepository @Inject constructor(
                     // Replace with your own Stripe publishable key
                     stripeOptions = PrimerStripeOptions(
                         mandateData = null,
-                        publishableKey = "pk_test_51O8zfQKUK6bXIdC2xPvSS6UvriE9kwpvttwB7H9PAzhNAZoGzLgiDOyd4WooozeWHxoRrKo6b2VjZYxNCMX3W7bk00rMDivjau"
+                        publishableKey = BuildConfig.STRIPE_PUBLISHABLE_KEY
                     )
                 )
             )

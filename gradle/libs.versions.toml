@@ -57,6 +57,7 @@ primerSdk = "2.27.4-dropinmock" # TODO TWS: use release version
 primer3dsSdk = "1.4.2"
 uiToolingPreviewAndroid = "1.6.8"
 uiTooling = "1.6.8"
+secretsGradlePlugin = "2.0.1"
 
 [libraries]
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
@@ -114,3 +115,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktLint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
+google-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
