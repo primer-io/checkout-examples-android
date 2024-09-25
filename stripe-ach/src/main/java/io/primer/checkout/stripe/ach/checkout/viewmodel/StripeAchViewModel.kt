@@ -258,7 +258,7 @@ class StripeAchViewModel @AssistedInject constructor(
             error: () -> Flow<PrimerError>,
             validation: () -> Flow<PrimerValidationStatus<AchUserDetailsCollectableData>>,
             updateCollectedData: (AchUserDetailsCollectableData) -> Unit,
-            @Assisted("submit") submitComponent: () -> Unit,
+            @Assisted("submit") submitComponent: () -> Unit
         ): StripeAchViewModel
     }
 

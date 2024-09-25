@@ -16,12 +16,15 @@ import io.primer.checkout.stripe.ach.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StripeAchTopAppBar(onBack: () -> Unit) {
-    TopAppBar(title = {
-        Text(text = stringResource(id = R.string.stripe_ach_title))
-    }, navigationIcon = {
-        IconButton(onClick = onBack) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(id = R.string.menu_back))
-        }
-    }, modifier = Modifier.fillMaxWidth()
+    TopAppBar(
+        title = {
+            Text(text = stringResource(id = R.string.stripe_ach_title))
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(id = R.string.menu_back))
+            }
+        },
+        modifier = Modifier.fillMaxWidth()
     )
 }

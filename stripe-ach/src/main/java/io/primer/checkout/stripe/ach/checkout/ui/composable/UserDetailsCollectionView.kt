@@ -124,7 +124,7 @@ private fun ValidatedTextField(
                     color = MaterialTheme.colorScheme.error
                 )
             }
-        },
+        }
     )
 }
 

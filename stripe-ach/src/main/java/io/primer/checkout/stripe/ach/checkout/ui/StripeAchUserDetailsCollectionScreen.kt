@@ -68,7 +68,7 @@ fun StripeAchUserDetailsCollectionScreen(
 
             StripeAchUiState.DisplayMandate -> StripeAchMandateDialog(
                 onDeclineMandate = viewModel::declineMandate,
-                onAcceptMandate = viewModel::acceptMandate,
+                onAcceptMandate = viewModel::acceptMandate
             )
         }
     }

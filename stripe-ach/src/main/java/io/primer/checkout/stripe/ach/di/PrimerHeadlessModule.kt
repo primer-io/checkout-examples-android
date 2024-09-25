@@ -14,7 +14,7 @@ import io.primer.checkout.stripe.ach.checkout.data.repository.PrimerHeadlessRepo
 class PrimerHeadlessModule {
     @Provides
     fun providePrimerHeadlessRepository(
-        @ApplicationContext appContext: Context,
+        @ApplicationContext appContext: Context
     ): PrimerHeadlessRepository = DefaultPrimerHeadlessRepository(
         context = appContext
     )
