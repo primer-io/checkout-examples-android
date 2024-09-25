@@ -1,0 +1,7 @@
+/build
+
+# security
+*.pem
+*.crt
+.env/
+.env.example

@@ -1,4 +1,4 @@
-package io.primer.checkout.dropin.configuration.extensions
+package io.primer.checkout.stripe.ach.configuration.extensions
 
 import android.os.Build
 import android.os.Bundle
