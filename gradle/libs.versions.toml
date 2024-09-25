@@ -52,7 +52,7 @@ uiAutomator = "2.3.0"
 viewModelCompose = "2.8.3"
 
 ksp = "1.9.24-1.0.20"
-ktLint = "12.1.0"
+ktLint = "11.6.1"
 primerSdk = "2.31.0"
 primer3dsSdk = "1.4.2"
 uiToolingPreviewAndroid = "1.6.8"
