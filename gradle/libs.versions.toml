@@ -30,7 +30,7 @@ gson = "2.10.1"
 hilt = "2.49"
 hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
-primer-stripe = "1.1.0" # TODO TWS: use release version
+primer-stripe = "1.0.0"
 kotlin = "1.9.24"
 ktlint = "0.40.0"
 ktx = "1.13.1"
@@ -53,7 +53,7 @@ viewModelCompose = "2.8.3"
 
 ksp = "1.9.24-1.0.20"
 ktLint = "12.1.0"
-primerSdk = "2.27.4-dropinmock" # TODO TWS: use release version
+primerSdk = "2.31.0"
 primer3dsSdk = "1.4.2"
 uiToolingPreviewAndroid = "1.6.8"
 uiTooling = "1.6.8"
